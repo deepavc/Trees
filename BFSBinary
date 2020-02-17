@@ -1,0 +1,64 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class BFSBinary {
+    
+    
+     public List<List<Integer>> levelOrder(TreeNode root) {
+
+        List<List<Integer>> op = new ArrayList<>();
+
+        if(root != null ){
+            List<TreeNode> nodes = new ArrayList<>();
+            nodes.add(root);
+            addRootVal(nodes,op);
+            findNeighbours(nodes ,op);
+        }
+
+
+        return op;
+
+    }
+
+    private void addRootVal(List<TreeNode> root, List<List<Integer>> op){
+        List<Integer> level =  new ArrayList<>();
+
+        root.forEach( treeNode -> {
+            level.add(treeNode.val);
+        });
+
+        if(!level.isEmpty()){
+            op.add(level);
+        }
+
+
+    }
+
+    private void findNeighbours(List<TreeNode> nodes, List<List<Integer>> op){
+
+        if(nodes.isEmpty()){
+            return;
+        }
+
+        List<TreeNode> children =  new ArrayList<>();
+        nodes.forEach(treeNode -> {
+
+            if(treeNode.left != null){
+                children.add(treeNode.left);
+            }
+            if(treeNode.right != null){
+                children.add(treeNode.right);
+            }
+        });
+
+        addRootVal(children,op);
+        findNeighbours(children,op);
+
+    }
+}
